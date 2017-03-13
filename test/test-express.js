@@ -8,24 +8,6 @@ var mockLcd = {
   }
 }
 
-//
-// var mockLcd = {
-//   Jhd1313m1: function(){
-//     return {
-//       setColor: function(red, gree, blue){
-//         console.log("Setting color");
-//       },
-//       setCursor: function(x,y){
-//         console.log('Setting cursor');
-//       },
-//       write: function(msg){
-//         console.log('Writing message',msg);
-//       }
-//     }
-//   }
-// }
-
-
 describe('Testing express', function() {
   var server
   message = undefined
