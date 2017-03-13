@@ -1,9 +1,10 @@
 var rewire = require("rewire")
 var request = require('supertest')
-
+var expect = require("chai").expect;
+var message
 var mockLcd = {
   displayMessage: function(msg) {
-    console.log('Displaying message: ', msg);
+    message = msg
   }
 }
 
@@ -27,6 +28,8 @@ var mockLcd = {
 
 describe('Testing express', function() {
   var server
+  message = undefined
+
   beforeEach(function() {
     server = rewire('../src/index.js')
     server.__set__({
@@ -36,12 +39,24 @@ describe('Testing express', function() {
 
   afterEach(function() {
     server.close()
+    message = undefined
   })
 
   it('responds to /', function(done) {
+    var body = {
+      message: "TestMessage"
+    }
     request(server)
       .post('/')
-      .expect(200, done)
+      .send(body)
+      .type('form')
+      .expect(200, function(err) {
+        if(err) done(err)
+        else {
+          expect(message).to.equal(body.message)
+          done()
+        }
+      })
   })
 
 

@@ -15,7 +15,6 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 app.post('/', function(req, res) {
-  console.log(req.body);
   lcd.displayMessage(req.body.message)
   res.send(req.body)
 })
