@@ -1,0 +1,23 @@
+{
+  "name": "caffeine-routine-galileo",
+  "version": "1.0.0",
+  "description": "Galileo part of Caffeine Routine",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CodeSpaceHQ/caffeine-routine-galileo.git"
+  },
+  "author": "Alexander Clines",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CodeSpaceHQ/caffeine-routine-galileo/issues"
+  },
+  "homepage": "https://github.com/CodeSpaceHQ/caffeine-routine-galileo#readme",
+  "dependencies": {
+    "express": "^4.15.2"
+  }
+}
