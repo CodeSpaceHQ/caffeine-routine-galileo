@@ -2,7 +2,7 @@ var rewire = require("rewire")
 var request = require('supertest')
 
 var mockLcd = {
-  displayMessage: function(msg){
+  displayMessage: function(msg) {
     console.log('Displaying message: ', msg);
   }
 }
@@ -25,9 +25,9 @@ var mockLcd = {
 // }
 
 
-describe('Testing express', function(){
+describe('Testing express', function() {
   var server
-  beforeEach(function(){
+  beforeEach(function() {
     server = rewire('../src/index.js')
     server.__set__({
       lcd: mockLcd
@@ -38,7 +38,7 @@ describe('Testing express', function(){
     server.close()
   })
 
-  it('responds to /', function(done){
+  it('responds to /', function(done) {
     request(server)
       .post('/')
       .expect(200, done)
