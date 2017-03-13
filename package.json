@@ -2,10 +2,10 @@
   "name": "caffeine-routine-galileo",
   "version": "1.0.0",
   "description": "Galileo part of Caffeine Routine",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "node src/index.js"
   },
   "repository": {
     "type": "git",
@@ -20,5 +20,11 @@
   "dependencies": {
     "body-parser": "^1.17.1",
     "express": "^4.15.2"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.2.0",
+    "rewire": "^2.5.2",
+    "supertest": "^3.0.0"
   }
 }
