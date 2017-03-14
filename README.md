@@ -6,7 +6,7 @@ Intel Galileo project for Caffeine Routine
 ## `/heat`
 Description: Tells the Keurig to heat up.
 
-## '/brew/:size'
+## `/brew/:size`
 Description: Tell the Keurig to start brewing.  
 Size can be:
 - small
