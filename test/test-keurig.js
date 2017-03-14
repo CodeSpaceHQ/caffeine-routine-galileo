@@ -27,6 +27,7 @@ describe('Testing keurig', () => {
 
   it('should be in waiting state.', (done) => {
     expect(keurig._status).to.equal(0);
+    expect(message).to.equal(keurig._messages.WAITING);
     done();
   });
 

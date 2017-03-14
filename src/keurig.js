@@ -8,7 +8,10 @@ try {
 }
 
 const Messages = {
-  HEATING_UP: 'Heating up.',
+  WAITING: 'Waiting',
+  HEATING_UP: 'Heating up',
+  READY: 'Ready',
+  BREWING: 'Brewing',
 };
 
 const Status = {
@@ -24,10 +27,11 @@ class Keurig {
     this._isHeated = false;
     this._status = 0;
     this._messages = Messages;
+    lcd.displayMessage(this._messages.WAITING);
   }
 
   /*
-  If Keurig is in waiting state, het up, else do nothing.
+  If Keurig is in waiting state, heat up, else do nothing.
   */
   heatUp() {
     if (this._status === Status.WAITING) {
