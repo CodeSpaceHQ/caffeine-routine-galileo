@@ -68,6 +68,13 @@ describe('Testing keurig', () => {
     });
   });
 
+  it('should return the schedule', (done) => {
+    const schedule = ['mockDate1', 'mockDate2'];
+    keurig.schedule = schedule;
+    expect(keurig.getSchedule()).to.equal(schedule);
+    done();
+  });
+
   it('should validate correct sizes.', (done) => {
     const sizes = ['Small', 'Medium', 'Large'];
     sizes.forEach((size) => {

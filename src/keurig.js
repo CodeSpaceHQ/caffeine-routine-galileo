@@ -17,6 +17,7 @@ const Status = {
 class Keurig {
 
   constructor() {
+    this.schedule = [];
     this._isHeated = false;
     this._status = 0;
     this._messages = Messages;
@@ -49,6 +50,9 @@ class Keurig {
     cb(new Error('Keurig not ready.'));
   }
 
+  getSchedule() {
+    return this.schedule;
+  }
   validateSize(size) {
     const upperSize = size.toUpperCase();
     if (upperSize === 'SMALL') return true;

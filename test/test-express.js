@@ -75,6 +75,7 @@ describe('Testing express', () => {
     const body = {
       size: 'small',
     };
+
     const mockCb = new Error('MockError');
     mockKeurig.locals.cb.brew = mockCb;
     request(server)
@@ -84,7 +85,19 @@ describe('Testing express', () => {
       .expect(400)
       .end((err, res) => {
         expect(mockKeurig.locals.brewing).to.be.true;
-        expect(res.text).to.equal('MockError');
+        expect(res.text).to.equal(mockCb.message);
+        done(err);
+      });
+  });
+
+  it('should return the schedule', (done) => {
+    const schedule = ['mockDate1', 'mockDate2'];
+    mockKeurig.locals.schedule = schedule;
+    request(server)
+      .get('/schedule')
+      .expect(200)
+      .end((err, res) => {
+        expect(res.body).to.deep.equal(schedule);
         done(err);
       });
   });

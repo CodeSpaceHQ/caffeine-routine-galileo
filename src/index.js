@@ -28,6 +28,10 @@ app.post('/brew', (req, res) => {
   });
 });
 
+app.get('/schedule', (req, res) => {
+  res.send(keurig.getSchedule());
+});
+
 const server = app.listen(3000);
 
 module.exports = server;

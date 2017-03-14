@@ -16,6 +16,10 @@ class Keurig {
     locals.size = size;
     locals.validateSize = true;
   }
+
+  getSchedule() {
+    return locals.schedule;
+  }
 }
 
 module.exports = Keurig;
