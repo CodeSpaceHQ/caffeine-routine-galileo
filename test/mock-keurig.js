@@ -20,6 +20,10 @@ class Keurig {
   getSchedule() {
     return locals.schedule;
   }
+
+  setSchedule(schedule) {
+    locals.schedule = schedule;
+  }
 }
 
 module.exports = Keurig;

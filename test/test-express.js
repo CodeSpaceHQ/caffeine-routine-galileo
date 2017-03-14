@@ -101,4 +101,19 @@ describe('Testing express', () => {
         done(err);
       });
   });
+
+  it('should set the schedule', (done) => {
+    const schedule = ['mockDate1', 'mockDate2'];
+    request(server)
+      .post('/schedule')
+      .send({
+        schedule,
+      })
+      .expect(200)
+      .end((err, res) => {
+        expect(mockKeurig.locals.schedule).to.deep.equal(schedule);
+        expect(res.text).to.equal('Schedule set');
+        done(err);
+      });
+  });
 });

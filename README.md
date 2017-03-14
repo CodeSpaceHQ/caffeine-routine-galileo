@@ -10,7 +10,7 @@ Description: Tells the Keurig to heat up.
 ## `/brew`
 Verb: POST  
 Description: Tell the Keurig to start brewing.  
-Body:
+Request Body:
 ``` javascript
 {
   size: 'SIZE'
@@ -20,3 +20,28 @@ Size can be:
 - small
 - medium
 - large
+
+
+## `/schedule`
+Verb: GET  
+Description: Returns the schedule.  
+Response Body:
+``` javascript
+[
+  "date_time_1",
+  "date_time_2",
+  "date_time_n"
+]
+```
+
+## `/schedule`
+Verb: POST  
+Description: Sets the schedule.  
+Request Body:
+``` javascript
+[
+  "date_time_1",
+  "date_time_2",
+  "date_time_n"
+]
+```

@@ -22,7 +22,7 @@ app.post('/heat', (req, res) => {
 });
 
 app.post('/brew', (req, res) => {
-  keurig.brew(req.params.size, (err) => {
+  keurig.brew(req.body.size, (err) => {
     if (err) res.status(400).send(err.message);
     else res.send('Brewing');
   });
@@ -30,6 +30,11 @@ app.post('/brew', (req, res) => {
 
 app.get('/schedule', (req, res) => {
   res.send(keurig.getSchedule());
+});
+
+app.post('/schedule', (req, res) => {
+  keurig.setSchedule(req.body.schedule);
+  res.send('Schedule set');
 });
 
 const server = app.listen(3000);

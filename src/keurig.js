@@ -53,6 +53,11 @@ class Keurig {
   getSchedule() {
     return this.schedule;
   }
+
+  setSchedule(schedule) {
+    this.schedule = schedule;
+  }
+
   validateSize(size) {
     const upperSize = size.toUpperCase();
     if (upperSize === 'SMALL') return true;
