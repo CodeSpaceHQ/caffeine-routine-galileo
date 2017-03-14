@@ -48,7 +48,27 @@ describe('Testing keurig', () => {
     done();
   });
 
-  it('should run on correct sizes.', (done) => {
+  it('should brew', (done) => {
+    keurig._status = 2; // Prepare keurig status to READY.
+    keurig.brew('medium', done);
+  });
+
+  it('should throw due to invalid size', (done) => {
+    keurig._status = 2;
+    keurig.brew('invalidsize', (err) => {
+      expect(err).to.be.an.error;
+      done();
+    });
+  });
+
+  it('should throw due to wrong status.', (done) => {
+    keurig.brew('medium', (err) => {
+      expect(err).to.be.an.error;
+      done();
+    });
+  });
+
+  it('should validate correct sizes.', (done) => {
     const sizes = ['Small', 'Medium', 'Large'];
     sizes.forEach((size) => {
       expect(keurig.validateSize(size)).to.be.true;
