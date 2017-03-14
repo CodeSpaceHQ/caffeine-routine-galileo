@@ -24,6 +24,11 @@ class Keurig {
     lcd.displayMessage(this._messages.WAITING);
   }
 
+  markReady() {
+    console.log('READY!');
+    this._status = Status.READY;
+    lcd.displayMessage(this._messages.READY);
+  }
   /*
   If Keurig is in waiting state, heat up, else do nothing.
   */
@@ -31,6 +36,7 @@ class Keurig {
     if (this._status === Status.WAITING) {
       lcd.displayMessage(this._messages.HEATING_UP);
       this._status = Status.HEATING_UP;
+      setTimeout(this.markReady, 90000); // Time to brew in milliseconds
       return true;
     }
     return false;
