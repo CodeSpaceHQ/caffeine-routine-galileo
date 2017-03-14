@@ -6,6 +6,7 @@ module.exports = {
     },
     "rules": {
       "no-underscore-dangle": "off",
-      "import/no-extraneous-dependencies": "off"
+      "import/no-extraneous-dependencies": "off",
+      "import/no-unresolved": "off"
     }
 };
