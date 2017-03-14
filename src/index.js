@@ -25,8 +25,8 @@ app.post('/', (req, res) => {
 });
 
 app.post('/heat', (req, res) => {
- keurig.heatUp();
-  res.send('Heating up')
+  keurig.heatUp();
+  res.send('Heating up');
 });
 
 const server = app.listen(3000);

@@ -1,12 +1,7 @@
 const request = require('supertest');
 const expect = require('chai').expect;
 const mockery = require('mockery');
-
-let mockLcd = require('./jsupm_i2clcd-mock.js')
-
-
-let status = 0;
-
+const mockLcd = require('./jsupm_i2clcd-mock.js');
 
 describe('Testing express', () => {
   let server;
@@ -14,21 +9,20 @@ describe('Testing express', () => {
   before(() => {
     mockery.enable();
     mockery.warnOnUnregistered(false);
-    mockery.registerMock('jsupm_i2clcd',mockLcd);
+    mockery.registerMock('jsupm_i2clcd', mockLcd);
   });
 
   after(() => {
     mockery.deregisterMock('jsupm_i2clcd');
     mockery.disable();
-  })
+  });
 
   beforeEach(() => {
-    server = require('../src/index.js');
+    server = require('../src/index.js'); // eslint-disable-line global-require
   });
 
   afterEach(() => {
     server.close();
-    status = 0;
   });
 
   it('should display any message', (done) => {
@@ -53,8 +47,8 @@ describe('Testing express', () => {
       .post('/heat')
       .expect(200)
       .end((err, res) => {
-        //console.log(res);
+        console.log(res);
         done(err);
       });
-  })
+  });
 });

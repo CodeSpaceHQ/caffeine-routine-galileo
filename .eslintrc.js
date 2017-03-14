@@ -12,6 +12,7 @@ module.exports = {
       "chai-friendly/no-unused-expressions": 2,
       "no-underscore-dangle": "off",
       "import/no-extraneous-dependencies": "off",
-      "import/no-unresolved": "off"
+      "import/no-unresolved": "off",
+      "class-methods-use-this": "off"
     }
 };

@@ -1,9 +1,6 @@
 const expect = require('chai').expect;
-// const rewire = require('rewire');
 const mockery = require('mockery');
-
-let mockLcd = require('./jsupm_i2clcd-mock.js')
-
+const mockLcd = require('./jsupm_i2clcd-mock.js');
 
 describe('Testing keurig', () => {
   let keurig;
@@ -11,16 +8,16 @@ describe('Testing keurig', () => {
   before(() => {
     mockery.enable();
     mockery.warnOnUnregistered(false);
-    mockery.registerMock('jsupm_i2clcd',mockLcd);
+    mockery.registerMock('jsupm_i2clcd', mockLcd);
   });
 
   after(() => {
     mockery.deregisterMock('jsupm_i2clcd');
     mockery.disable();
-  })
+  });
 
   beforeEach(() => {
-    let Keurig = require('../src/keurig.js');
+    const Keurig = require('../src/keurig.js'); // eslint-disable-line global-require
     keurig = new Keurig();
   });
 
