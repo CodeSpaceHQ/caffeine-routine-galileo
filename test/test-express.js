@@ -1,32 +1,37 @@
-const rewire = require('rewire');
 const request = require('supertest');
 const expect = require('chai').expect;
+const mockery = require('mockery');
+
+let mockLcd = require('./jsupm_i2clcd-mock.js')
 
 
-let message;
-const mockLcd = {
-  displayMessage: (msg) => {
-    message = msg;
-  },
-};
+let status = 0;
+
 
 describe('Testing express', () => {
   let server;
-  message = undefined;
+
+  before(() => {
+    mockery.enable();
+    mockery.warnOnUnregistered(false);
+    mockery.registerMock('jsupm_i2clcd',mockLcd);
+  });
+
+  after(() => {
+    mockery.deregisterMock('jsupm_i2clcd');
+    mockery.disable();
+  })
 
   beforeEach(() => {
-    server = rewire('../src/index.js');
-    server.__set__({
-      lcd: mockLcd,
-    });
+    server = require('../src/index.js');
   });
 
   afterEach(() => {
     server.close();
-    message = undefined;
+    status = 0;
   });
 
-  it('responds to /', (done) => {
+  it('should display any message', (done) => {
     const body = {
       message: 'TestMessage',
     };
@@ -37,9 +42,19 @@ describe('Testing express', () => {
       .expect(200, (err) => {
         if (err) done(err);
         else {
-          expect(message).to.equal(body.message);
+          expect(body.message).to.equal(mockLcd.locals.message);
           done();
         }
       });
   });
+
+  it('should start heating up', (done) => {
+    request(server)
+      .post('/heat')
+      .expect(200)
+      .end((err, res) => {
+        //console.log(res);
+        done(err);
+      });
+  })
 });
