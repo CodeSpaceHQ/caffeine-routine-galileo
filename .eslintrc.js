@@ -5,6 +5,7 @@ module.exports = {
       "node": true
     },
     "rules": {
-      "no-underscore-dangle": "off"
+      "no-underscore-dangle": "off",
+      "import/no-extraneous-dependencies": "off"
     }
 };
