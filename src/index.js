@@ -21,6 +21,13 @@ app.post('/heat', (req, res) => {
   res.send('Heating up');
 });
 
+app.post('/brew', (req, res) => {
+  keurig.brew(req.params.size, (err) => {
+    if (err) res.status(400).send(err.message);
+    else res.send('Brewing');
+  });
+});
+
 const server = app.listen(3000);
 
 module.exports = server;

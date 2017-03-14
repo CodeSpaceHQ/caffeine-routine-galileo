@@ -4,10 +4,18 @@ Intel Galileo project for Caffeine Routine
 
 # Endpoints
 ## `/heat`
+Verb: POST  
 Description: Tells the Keurig to heat up.
 
-## `/brew/:size`
+## `/brew`
+Verb: POST  
 Description: Tell the Keurig to start brewing.  
+Body:
+``` javascript
+{
+  size: 'SIZE'
+}
+```
 Size can be:
 - small
 - medium
