@@ -47,4 +47,14 @@ describe('Testing keurig', () => {
     }
     done();
   });
+
+  it('should run on correct sizes.', (done) => {
+    const sizes = ['Small', 'Medium', 'Large'];
+    sizes.forEach((size) => {
+      expect(keurig.validateSize(size)).to.be.true;
+      expect(keurig.validateSize(size.toLowerCase())).to.be.true;
+      expect(keurig.validateSize(size.toUpperCase())).to.be.true;
+    });
+    done();
+  });
 });

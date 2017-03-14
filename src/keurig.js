@@ -34,6 +34,27 @@ class Keurig {
     }
     return false;
   }
-}
 
+  brew(size, cb) {
+    if (!this.validateSize(size)) {
+      cb(new Error('Invalid size'));
+      return;
+    }
+    if (this._status === Status.READY) {
+      lcd.displayMessage(this._messages.BREWING);
+      this._status = Status.BREWING;
+      cb(null);
+      return;
+    }
+    cb(new Error('Keurig not ready.'));
+  }
+
+  validateSize(size) {
+    const upperSize = size.toUpperCase();
+    if (upperSize === 'SMALL') return true;
+    if (upperSize === 'MEDIUM') return true;
+    if (upperSize === 'LARGE') return true;
+    return false;
+  }
+}
 module.exports = Keurig;
