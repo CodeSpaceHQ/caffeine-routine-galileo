@@ -37,7 +37,7 @@ describe('Testing keurig', () => {
     expect(mockLcd.locals.message).to.equal(keurig._messages.READY);
     expect(keurig._status).to.equal(2);
     done();
-  })
+  });
 
   it('should start heating up', (done) => {
     const res = keurig.heatUp();

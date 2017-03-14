@@ -25,7 +25,6 @@ class Keurig {
   }
 
   markReady() {
-    console.log('READY!');
     this._status = Status.READY;
     lcd.displayMessage(this._messages.READY);
   }
