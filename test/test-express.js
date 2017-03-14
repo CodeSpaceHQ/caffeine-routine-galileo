@@ -47,7 +47,7 @@ describe('Testing express', () => {
       .post('/heat')
       .expect(200)
       .end((err, res) => {
-        console.log(res);
+        expect(res.text).to.equal('Heating up');
         done(err);
       });
   });
