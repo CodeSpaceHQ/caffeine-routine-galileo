@@ -1,26 +1,26 @@
-var express = require('express')
-var bodyParser = require('body-parser')
-var app = express()
+const express = require('express');
+const bodyParser = require('body-parser');
 
 try {
-  var lcd = require('./lcd.js')
-} catch(e) {
+  var lcd = require('./lcd.js'); // eslint-disable-line vars-on-top, global-require, no-var
+} catch (e) {
   // This try is used to catch the error that will be thrown when this is run on
   // a machine that isn't the Intel Galileo
+  // This is why there are severl eslint disabled.. until mocking of mraa can be found
 }
 
+const app = express();
+
 app.use(bodyParser.urlencoded({
-  extended: false
+  extended: false,
 }));
 app.use(bodyParser.json());
 
-app.post('/', function(req, res) {
-  lcd.displayMessage(req.body.message)
-  res.send(req.body)
-})
+app.post('/', (req, res) => {
+  lcd.displayMessage(req.body.message); // eslint-disable-line block-scoped-var
+  res.send(req.body);
+});
 
-var server = app.listen(3000, function() {
-  console.log('Listening on port 3000!')
-})
+const server = app.listen(3000);
 
 module.exports = server;

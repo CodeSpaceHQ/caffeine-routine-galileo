@@ -1,46 +1,45 @@
-var rewire = require("rewire")
-var request = require('supertest')
-var expect = require("chai").expect;
-var message
-var mockLcd = {
-  displayMessage: function(msg) {
-    message = msg
-  }
-}
+const rewire = require('rewire');
+const request = require('supertest');
+const expect = require('chai').expect;
 
-describe('Testing express', function() {
-  var server
-  message = undefined
 
-  beforeEach(function() {
-    server = rewire('../src/index.js')
+let message;
+const mockLcd = {
+  displayMessage: (msg) => {
+    message = msg;
+  },
+};
+
+describe('Testing express', () => {
+  let server;
+  message = undefined;
+
+  beforeEach(() => {
+    server = rewire('../src/index.js');
     server.__set__({
-      lcd: mockLcd
-    })
-  })
+      lcd: mockLcd,
+    });
+  });
 
-  afterEach(function() {
-    server.close()
-    message = undefined
-  })
+  afterEach(() => {
+    server.close();
+    message = undefined;
+  });
 
-  it('responds to /', function(done) {
-    var body = {
-      message: "TestMessage"
-    }
+  it('responds to /', (done) => {
+    const body = {
+      message: 'TestMessage',
+    };
     request(server)
       .post('/')
       .send(body)
       .type('form')
-      .expect(200, function(err) {
-        if(err) done(err)
+      .expect(200, (err) => {
+        if (err) done(err);
         else {
-          expect(message).to.equal(body.message)
-          done()
+          expect(message).to.equal(body.message);
+          done();
         }
-      })
-  })
-
-
-
-})
+      });
+  });
+});
