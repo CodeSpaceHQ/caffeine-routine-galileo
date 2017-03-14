@@ -1,6 +1,6 @@
 const mockery = require('mockery');
 const expect = require('chai').expect;
-const mockLcd = require('./jsupm_i2clcd-mock.js');
+const mockLcd = require('./mock-jsupm_i2clcd.js');
 
 describe('Testing lcd', () => {
   let lcd;

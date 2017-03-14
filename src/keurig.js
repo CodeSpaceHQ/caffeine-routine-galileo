@@ -1,11 +1,4 @@
-var lcd;// eslint-disable-line vars-on-top, no-var
-try {
-  lcd = require('./lcd.js'); // eslint-disable-line global-require
-} catch (e) {
-  // This try is used to catch the error that will be thrown when this is run on
-  // a machine that isn't the Intel Galileo
-  // This is why there are severl eslint disabled.. until mocking of mraa can be found
-}
+const lcd = require('./lcd.js');
 
 const Messages = {
   WAITING: 'Waiting',
