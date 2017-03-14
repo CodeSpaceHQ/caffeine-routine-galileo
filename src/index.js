@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 app.post('/', (req, res) => {
-  lcd.displayMessage(req.body.message); // eslint-disable-line block-scoped-var
+  lcd.displayMessage(req.body.message);
   res.send(req.body);
 });
 
