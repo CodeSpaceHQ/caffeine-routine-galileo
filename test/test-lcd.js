@@ -21,15 +21,32 @@ describe('Testing lcd', () => {
     lcd = require('../src/lcd.js'); // eslint-disable-line global-require
   });
 
-  it('should write the message', (done) => {
-    const testMessage = 'TestMessage';
-    lcd.displayMessage({
-      message: testMessage,
-      red: 0,
-      green: 0,
-      blue: 0,
+  describe('#displayMessage(data)', () => {
+    it('should write the message', (done) => {
+      const testMessage = 'TestMessage';
+      lcd.displayMessage({
+        message: testMessage,
+        red: 0,
+        green: 0,
+        blue: 0,
+      });
+      expect(testMessage).to.equal(mockLcd.locals.message);
+      done();
     });
-    expect(testMessage).to.equal(mockLcd.locals.message);
-    done();
+    it('should throw an error due to invalid colors.', (done) => {
+      try {
+        lcd.displayMessage({
+          message: 'testMessage',
+          red: -1,
+          green: 256,
+          blue: 300,
+        });
+        done('Error should have been thrown');
+      } catch(err) {
+        expect(err).to.be.an.error;
+        done();
+      }
+
+    });
   });
 });
