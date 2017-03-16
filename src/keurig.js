@@ -1,3 +1,4 @@
+'use strict';
 const lcd = require('./lcd.js');
 
 const Messages = {
@@ -21,19 +22,19 @@ class Keurig {
     this._isHeated = false;
     this._status = 0;
     this._messages = Messages;
-    lcd.displayMessage(this._messages.WAITING);
+    lcd.displayMessage(Messages.WAITING);
   }
 
   markReady() {
     this._status = Status.READY;
-    lcd.displayMessage(this._messages.READY);
+    lcd.displayMessage(Messages.READY);
   }
   /*
   If Keurig is in waiting state, heat up, else do nothing.
   */
   heatUp() {
     if (this._status === Status.WAITING) {
-      lcd.displayMessage(this._messages.HEATING_UP);
+      lcd.displayMessage(Messages.HEATING_UP);
       this._status = Status.HEATING_UP;
       setTimeout(this.markReady, 5000); // Time to brew in milliseconds
       return true;
@@ -47,7 +48,7 @@ class Keurig {
       return;
     }
     if (this._status === Status.READY) {
-      lcd.displayMessage(this._messages.BREWING);
+      lcd.displayMessage(Mssages.BREWING);
       this._status = Status.BREWING;
       cb(null);
       return;
