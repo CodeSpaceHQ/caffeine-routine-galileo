@@ -42,11 +42,10 @@ describe('Testing lcd', () => {
           blue: 300,
         });
         done('Error should have been thrown');
-      } catch(err) {
+      } catch (err) {
         expect(err).to.be.an.error;
         done();
       }
-
     });
   });
 });
