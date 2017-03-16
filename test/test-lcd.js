@@ -23,7 +23,12 @@ describe('Testing lcd', () => {
 
   it('should write the message', (done) => {
     const testMessage = 'TestMessage';
-    lcd.displayMessage(testMessage);
+    lcd.displayMessage({
+      message: testMessage,
+      red: 0,
+      green: 0,
+      blue: 0,
+    });
     expect(testMessage).to.equal(mockLcd.locals.message);
     done();
   });

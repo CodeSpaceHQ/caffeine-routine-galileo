@@ -12,7 +12,12 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 app.post('/', (req, res) => {
-  lcd.displayMessage(req.body.message);
+  lcd.displayMessage({
+    message: req.body.message,
+    red: 0,
+    green: 250,
+    blue: 0,
+  });
   res.send(req.body);
 });
 

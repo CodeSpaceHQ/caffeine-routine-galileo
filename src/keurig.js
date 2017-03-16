@@ -28,18 +28,42 @@ class Keurig {
   switchState(newState) {
     switch (newState) {
       case State.WAITING:
-        lcd.displayMessage(Messages.WAITING);
+        lcd.displayMessage({
+          message: Messages.WAITING,
+          red: 0,
+          green: 0,
+          blue: 250,
+        });
         break;
       case State.HEATING_UP:
-        if (context._state === State.WAITING) lcd.displayMessage(Messages.HEATING_UP);
-        else throw new Error('Cannot heat up, not in waiting state.');
+        if (context._state === State.WAITING) {
+          lcd.displayMessage({
+            message: Messages.HEATING_UP,
+            red: 250,
+            green: 0,
+            blue: 0,
+          });
+        } else throw new Error('Cannot heat up, not in waiting state.');
         break;
       case State.READY:
-        if (context._state === State.HEATING_UP) lcd.displayMessage(Messages.READY);
+        if (context._state === State.HEATING_UP) {
+          lcd.displayMessage({
+            message: Messages.READY,
+            red: 0,
+            green: 250,
+            blue: 0,
+          });
+        }
         break;
       case State.BREWING:
-        if (context._state === State.READY) lcd.displayMessage(Messages.BREWING);
-        else throw new Error('Keurig not ready.');
+        if (context._state === State.READY) {
+          lcd.displayMessage({
+            message: Messages.BREWING,
+            red: 0,
+            green: 0,
+            blue: 250,
+          });
+        } else throw new Error('Keurig not ready.');
         break;
       default:
         throw new Error('Unreachable');
