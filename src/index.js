@@ -9,6 +9,7 @@ const keurig = new Keurig();
 app.use(bodyParser.urlencoded({
   extended: false,
 }));
+
 app.use(bodyParser.json());
 
 app.post('/', (req, res) => {

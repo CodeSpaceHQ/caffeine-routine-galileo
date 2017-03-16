@@ -28,92 +28,100 @@ describe('Testing express', () => {
     server.close();
   });
 
-  it('should display any message', (done) => {
-    const body = {
-      message: 'TestMessage',
-    };
-    request(server)
-      .post('/')
-      .send(body)
-      .type('form')
-      .expect(200, (err) => {
-        if (err) done(err);
-        else {
-          expect(body.message).to.equal(mockLcd.locals.message);
-          done();
-        }
-      });
+  describe('/', () => {
+    it('should display any message', (done) => {
+      const body = {
+        message: 'TestMessage',
+      };
+      request(server)
+        .post('/')
+        .send(body)
+        .type('form')
+        .expect(200, (err) => {
+          if (err) done(err);
+          else {
+            expect(body.message).to.equal(mockLcd.locals.message);
+            done();
+          }
+        });
+    });
   });
 
-  it('should start heating up', (done) => {
-    request(server)
-      .post('/heat')
-      .expect(200)
-      .end((err) => {
-        expect(mockKeurig.locals.heatingUp).to.be.true;
-        done(err);
-      });
+  describe('/heat', () => {
+    it('should start heating up', (done) => {
+      request(server)
+        .post('/heat')
+        .expect(200)
+        .end((err) => {
+          expect(mockKeurig.locals.heatingUp).to.be.true;
+          done(err);
+        });
+    });
   });
 
-  it('should start brewing', (done) => {
-    const body = {
-      size: 'small',
-    };
-    request(server)
-      .post('/brew')
-      .send(body)
-      .type('form')
-      .expect(200)
-      .end((err, res) => {
-        expect(mockKeurig.locals.brewing).to.be.true;
-        expect(res.text).to.equal('Brewing');
-        done(err);
-      });
+  describe('/brew', () => {
+    it('should start brewing', (done) => {
+      const body = {
+        size: 'small',
+      };
+      request(server)
+        .post('/brew')
+        .send(body)
+        .type('form')
+        .expect(200)
+        .end((err, res) => {
+          expect(mockKeurig.locals.brewing).to.be.true;
+          expect(res.text).to.equal('Brewing');
+          done(err);
+        });
+    });
+
+    it('should not brew, returning an error', (done) => {
+      const body = {
+        size: 'small',
+      };
+
+      const mockCb = new Error('MockError');
+      mockKeurig.locals.cb.brew = mockCb;
+      request(server)
+        .post('/brew')
+        .send(body)
+        .type('form')
+        .expect(400)
+        .end((err, res) => {
+          expect(mockKeurig.locals.brewing).to.be.true;
+          expect(res.text).to.equal(mockCb.message);
+          done(err);
+        });
+    });
   });
 
-  it('should not brew, returning an error', (done) => {
-    const body = {
-      size: 'small',
-    };
+  describe('/schedule', () => {
+    it('should return the schedule', (done) => {
+      const schedule = ['mockDate1', 'mockDate2'];
+      mockKeurig.locals.schedule = schedule;
+      request(server)
+        .get('/schedule')
+        .expect(200)
+        .end((err, res) => {
+          expect(res.body).to.deep.equal(schedule);
+          done(err);
+        });
+    });
 
-    const mockCb = new Error('MockError');
-    mockKeurig.locals.cb.brew = mockCb;
-    request(server)
-      .post('/brew')
-      .send(body)
-      .type('form')
-      .expect(400)
-      .end((err, res) => {
-        expect(mockKeurig.locals.brewing).to.be.true;
-        expect(res.text).to.equal(mockCb.message);
-        done(err);
-      });
-  });
-
-  it('should return the schedule', (done) => {
-    const schedule = ['mockDate1', 'mockDate2'];
-    mockKeurig.locals.schedule = schedule;
-    request(server)
-      .get('/schedule')
-      .expect(200)
-      .end((err, res) => {
-        expect(res.body).to.deep.equal(schedule);
-        done(err);
-      });
-  });
-
-  it('should set the schedule', (done) => {
-    const schedule = ['mockDate1', 'mockDate2'];
-    request(server)
-      .post('/schedule')
-      .send({
-        schedule,
-      })
-      .expect(200)
-      .end((err, res) => {
-        expect(mockKeurig.locals.schedule).to.deep.equal(schedule);
-        expect(res.text).to.equal('Schedule set');
-        done(err);
-      });
+    it('should set the schedule', (done) => {
+      const schedule = ['mockDate1', 'mockDate2'];
+      request(server)
+        .post('/schedule')
+        .send({
+          schedule,
+        })
+        .expect(200)
+        .end((err, res) => {
+          expect(mockKeurig.locals.schedule).to.deep.equal(schedule);
+          expect(res.text).to.equal('Schedule set');
+          done(err);
+        });
+    });
   });
 });
