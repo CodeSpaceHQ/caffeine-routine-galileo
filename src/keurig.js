@@ -1,4 +1,5 @@
-'use strict';
+'use strict'; // eslint-disable-line strict, lines-around-directive
+
 const lcd = require('./lcd.js');
 
 const Messages = {
@@ -19,32 +20,49 @@ class Keurig {
 
   constructor() {
     this.schedule = [];
-    context = this;
-    this._state = 0;
     this._messages = Messages;
-    lcd.displayMessage(Messages.WAITING);
+    context = this;
+    this.switchState(State.WAITING);
   }
 
-  updateState(newState) {
+  switchState(newState) {
+    switch (newState) {
+      case State.WAITING:
+        lcd.displayMessage(Messages.WAITING);
+        break;
+      case State.HEATING_UP:
+        if (context._state === State.WAITING) lcd.displayMessage(Messages.HEATING_UP);
+        else throw new Error('Cannot heat up, not in waiting state.');
+        break;
+      case State.READY:
+        if (context._state === State.HEATING_UP) lcd.displayMessage(Messages.READY);
+        break;
+      case State.BREWING:
+        if (context._state === State.READY) lcd.displayMessage(Messages.BREWING);
+        else throw new Error('Keurig not ready.');
+        break;
+      default:
+        throw new Error('Unreachable');
+    }
 
+    context._state = newState;
   }
 
   markReady() {
-    context._state = State.READY;
-    lcd.displayMessage(Messages.READY);
+    context.switchState(State.READY);
   }
   /*
   If Keurig is in waiting state, heat up, else do nothing.
   */
   heatUp() {
-    if (this._state === State.WAITING) {
-      lcd.displayMessage(Messages.HEATING_UP);
-      this._state = State.HEATING_UP;
+    try {
+      this.switchState(State.HEATING_UP);
       context = this;
       setTimeout(this.markReady, 5000); // Time to brew in milliseconds
       return true;
+    } catch (err) {
+      return false;
     }
-    return false;
   }
 
   brew(size, cb) {
@@ -52,13 +70,12 @@ class Keurig {
       cb(new Error('Invalid size'));
       return;
     }
-    if (this._state === State.READY) {
-      lcd.displayMessage(Messages.BREWING);
-      this._state = State.BREWING;
+    try {
+      this.switchState(State.BREWING);
       cb(null);
-      return;
+    } catch (err) {
+      cb(new Error(err.message));
     }
-    cb(new Error('Keurig not ready.'));
   }
 
   getSchedule() {
