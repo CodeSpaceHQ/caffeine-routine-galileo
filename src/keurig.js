@@ -35,7 +35,7 @@ class Keurig {
     if (this._status === Status.WAITING) {
       lcd.displayMessage(this._messages.HEATING_UP);
       this._status = Status.HEATING_UP;
-      setTimeout(this.markReady, 90000); // Time to brew in milliseconds
+      setTimeout(this.markReady, 5000); // Time to brew in milliseconds
       return true;
     }
     return false;
