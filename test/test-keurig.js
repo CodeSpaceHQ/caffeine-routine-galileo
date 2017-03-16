@@ -26,16 +26,16 @@ describe('Testing keurig', () => {
   });
 
   it('should be in waiting state.', (done) => {
-    expect(keurig._status).to.equal(0);
+    expect(keurig._state).to.equal(0);
     expect(mockLcd.locals.message).to.equal(keurig._messages.WAITING);
     done();
   });
 
   it('should become ready', (done) => {
-    keurig._status = 1;
+    keurig._state = 1;
     keurig.markReady();
     expect(mockLcd.locals.message).to.equal(keurig._messages.READY);
-    expect(keurig._status).to.equal(2);
+    expect(keurig._state).to.equal(2);
     done();
   });
 
@@ -43,13 +43,13 @@ describe('Testing keurig', () => {
     const res = keurig.heatUp();
     expect(res).to.be.true;
     expect(mockLcd.locals.message).to.equal(keurig._messages.HEATING_UP);
-    expect(keurig._status).to.equal(1);
+    expect(keurig._state).to.equal(1);
     done();
   });
 
   it('should not heat up if not waiting.', (done) => {
-    for (let status = 1; status < 4; status += 1) {
-      keurig._status = status;
+    for (let state = 1; state < 4; state += 1) {
+      keurig._state = state;
       const res = keurig.heatUp();
       expect(res).to.be.false;
     }
@@ -57,19 +57,19 @@ describe('Testing keurig', () => {
   });
 
   it('should brew', (done) => {
-    keurig._status = 2; // Prepare keurig status to READY.
+    keurig._state = 2; // Prepare keurig state to READY.
     keurig.brew('medium', done);
   });
 
   it('should throw due to invalid size', (done) => {
-    keurig._status = 2;
+    keurig._state = 2;
     keurig.brew('invalidsize', (err) => {
       expect(err).to.be.an.error;
       done();
     });
   });
 
-  it('should throw due to wrong status.', (done) => {
+  it('should throw due to wrong state.', (done) => {
     keurig.brew('medium', (err) => {
       expect(err).to.be.an.error;
       done();

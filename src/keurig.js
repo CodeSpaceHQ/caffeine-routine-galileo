@@ -8,34 +8,39 @@ const Messages = {
   BREWING: 'Brewing',
 };
 
-const Status = {
+const State = {
   WAITING: 0,
   HEATING_UP: 1,
   READY: 2,
   BREWING: 3,
 };
-
+let context;
 class Keurig {
 
   constructor() {
     this.schedule = [];
-    this._isHeated = false;
-    this._status = 0;
+    context = this;
+    this._state = 0;
     this._messages = Messages;
     lcd.displayMessage(Messages.WAITING);
   }
 
+  updateState(newState) {
+
+  }
+
   markReady() {
-    this._status = Status.READY;
+    context._state = State.READY;
     lcd.displayMessage(Messages.READY);
   }
   /*
   If Keurig is in waiting state, heat up, else do nothing.
   */
   heatUp() {
-    if (this._status === Status.WAITING) {
+    if (this._state === State.WAITING) {
       lcd.displayMessage(Messages.HEATING_UP);
-      this._status = Status.HEATING_UP;
+      this._state = State.HEATING_UP;
+      context = this;
       setTimeout(this.markReady, 5000); // Time to brew in milliseconds
       return true;
     }
@@ -47,9 +52,9 @@ class Keurig {
       cb(new Error('Invalid size'));
       return;
     }
-    if (this._status === Status.READY) {
-      lcd.displayMessage(Mssages.BREWING);
-      this._status = Status.BREWING;
+    if (this._state === State.READY) {
+      lcd.displayMessage(Messages.BREWING);
+      this._state = State.BREWING;
       cb(null);
       return;
     }
