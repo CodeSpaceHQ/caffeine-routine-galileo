@@ -31,8 +31,8 @@ class Keurig {
         lcd.displayMessage({
           message: Messages.WAITING,
           red: 0,
-          green: 0,
-          blue: 250,
+          green: 255,
+          blue: 255,
         });
         break;
       case State.HEATING_UP:
@@ -40,7 +40,7 @@ class Keurig {
           lcd.displayMessage({
             message: Messages.HEATING_UP,
             red: 250,
-            green: 0,
+            green: 69,
             blue: 0,
           });
         } else throw new Error('Cannot heat up, not in waiting state.');
@@ -49,9 +49,9 @@ class Keurig {
         if (context._state === State.HEATING_UP) {
           lcd.displayMessage({
             message: Messages.READY,
-            red: 0,
-            green: 250,
-            blue: 0,
+            red: 50,
+            green: 205,
+            blue: 50,
           });
         }
         break;
@@ -59,9 +59,9 @@ class Keurig {
         if (context._state === State.READY) {
           lcd.displayMessage({
             message: Messages.BREWING,
-            red: 0,
-            green: 0,
-            blue: 250,
+            red: 65,
+            green: 105,
+            blue: 225,
           });
         } else throw new Error('Keurig not ready.');
         break;
