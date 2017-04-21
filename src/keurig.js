@@ -72,6 +72,10 @@ class Keurig {
     context._state = newState;
   }
 
+  markWaiting() {
+    context.switchState(State.WAITING);
+  }
+
   markReady() {
     context.switchState(State.READY);
   }
@@ -82,20 +86,27 @@ class Keurig {
     try {
       this.switchState(State.HEATING_UP);
       context = this;
-      setTimeout(this.markReady, 5000); // Time to brew in milliseconds
+      setTimeout(this.markReady, 5000); // Time to heat up in milliseconds
       return true;
     } catch (err) {
       return false;
     }
   }
 
+
   brew(size, cb) {
+    if (size === undefined) {
+      cb(new Error('Missing size'));
+      return;
+    }
     if (!this.validateSize(size)) {
       cb(new Error('Invalid size'));
       return;
     }
     try {
       this.switchState(State.BREWING);
+      context = this;
+      setTimeout(this.markWaiting, 2500); // Time to brew
       cb(null);
     } catch (err) {
       cb(new Error(err.message));
