@@ -1,7 +1,7 @@
 const express = require('express'); // Express server
 const bodyParser = require('body-parser'); // JSON body parser
 // const Keurig = require('./keurig.js'); // Keurig emulator
-const lcd = require('./lcd.js'); // Displaying text on LCD screen
+// const lcd = require('./lcd.js'); // Displaying text on LCD screen
 
 const app = express(); // The actual express application
 // const keurig = new Keurig(); // The keurig emulator
@@ -17,12 +17,7 @@ app.use(bodyParser.json());
 
 // Displays a message to the LCD screen
 app.post('/', (req, res) => {
-  lcd.displayMessage({
-    message: req.body.message,
-    red: 0,
-    green: 250,
-    blue: 0,
-  });
+  console.log('post');
   res.send(req.body);
 });
 
@@ -35,7 +30,7 @@ app.post('/heat', (req, res) => {
 // Brew coffee
 app.post('/brew', (req, res) => {
   console.log('brewing');
-  res.send('Brewing');
+  res.send(req.body);
 });
 
 
@@ -53,6 +48,6 @@ app.post('/schedule', (req, res) => {
 
 // Set server to listen to port
 const server = app.listen(3000);
-
+console.log('listening on port 3000');
 // So server can be externally accessed for testing
 module.exports = server;
