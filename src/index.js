@@ -1,10 +1,10 @@
 const express = require('express'); // Express server
 const bodyParser = require('body-parser'); // JSON body parser
-const Keurig = require('./keurig.js'); // Keurig emulator
+// const Keurig = require('./keurig.js'); // Keurig emulator
 const lcd = require('./lcd.js'); // Displaying text on LCD screen
 
 const app = express(); // The actual express application
-const keurig = new Keurig(); // The keurig emulator
+// const keurig = new Keurig(); // The keurig emulator
 
 
 // Prepares URL encoding for a JSON body
@@ -28,27 +28,26 @@ app.post('/', (req, res) => {
 
 // Heat up water
 app.post('/heat', (req, res) => {
-  keurig.heatUp();
+  console.log('Heating up');
   res.send('Heating up');
 });
 
 // Brew coffee
 app.post('/brew', (req, res) => {
-  keurig.brew(req.body.size, (err) => {
-    if (err) res.status(400).send(err.message);
-    else res.send('Brewing');
-  });
+  console.log('brewing');
+  res.send('Brewing');
 });
 
 
 // Retrieve schedule
 app.get('/schedule', (req, res) => {
-  res.send(keurig.getSchedule());
+  console.log('retrieving schedule');
+  res.send('get schedule');
 });
 
 // Update schedule
 app.post('/schedule', (req, res) => {
-  keurig.setSchedule(req.body.schedule);
+  res.send('update schedule');
   res.send('Schedule set');
 });
 
